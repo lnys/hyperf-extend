@@ -1,0 +1,31 @@
+{
+    "name": "fastmini/hyperf-extend",
+    "description": "hyperf扩展工具包",
+    "authors": [
+        {
+            "name": "niancode",
+            "email": "niancode@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*",
+        "ext-openssl": "*",
+        "ext-swoole": ">=4.5",
+        "ext-iconv": "*",
+        "graylog2/gelf-php": "~1.6.0"
+    },
+    "require-dev": {
+    },
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Mybank\\": "src/"
+        },
+        "files": [
+            "src/Utils/devtool.php",
+            "src/Utils/functions.php"
+        ]
+    }
+}
