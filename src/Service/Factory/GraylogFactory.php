@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Mybank\Service\Factory;
+namespace HyperfExtend\Service\Factory;
 
 class GraylogFactory
 {

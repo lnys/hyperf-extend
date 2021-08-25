@@ -1,5 +1,5 @@
 {
-    "name": "fastmini/hyperf-extend",
+    "name": "lnys/hyperf-extend",
     "description": "hyperf扩展工具包",
     "authors": [
         {
@@ -21,7 +21,7 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Mybank\\": "src/"
+            "HyperfExtend\\": "src/"
         },
         "files": [
             "src/Utils/devtool.php",
