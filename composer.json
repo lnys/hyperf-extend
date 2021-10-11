@@ -11,7 +11,7 @@
         "php": ">=7.4",
         "ext-json": "*",
         "ext-openssl": "*",
-        "ext-swoole": ">=4.5",
+        "ext-swoole": ">=4.4",
         "ext-iconv": "*",
         "graylog2/gelf-php": "~1.6.0"
     },
