@@ -43,3 +43,18 @@ if (!function_exists('IsJson')) {
         }
     }
 }
+
+if (!function_exists('RandId')) {
+    function RandId(int $length = 10)
+    {
+        $rand = rand(5, 15);
+        return substr(str_replace("-", '', \Ramsey\Uuid\Uuid::uuid1(Di(\Ramsey\Uuid\Provider\Node\RandomNodeProvider::class)->getNode())), $rand, $length);
+    }
+}
+
+if (!function_exists('FilterSpace')) {
+    function FilterSpace($string)
+    {
+        return preg_replace('# #', '', $string);
+    }
+}
