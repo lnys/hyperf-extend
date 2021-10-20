@@ -63,8 +63,8 @@ if (!function_exists('FilterSpace')) {
 /**
  * 发送nsq消息
  */
-if(!function_exists('sendNSQ')) {
-    function sendNSQ(string $topic, $data, float $deferTime = 0.0)
+if(!function_exists('SendNSQ')) {
+    function SendNSQ(string $topic, $data, float $deferTime = 0.0)
     {
         try {
             retry(1, function() use ($topic, $data, $deferTime) {
