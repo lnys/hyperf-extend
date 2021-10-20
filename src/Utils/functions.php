@@ -8,6 +8,7 @@
 
 declare(strict_types=1);
 
+use Hyperf\Nsq\Nsq;
 use Hyperf\Utils\ApplicationContext;
 
 /**
@@ -56,5 +57,24 @@ if (!function_exists('FilterSpace')) {
     function FilterSpace($string)
     {
         return preg_replace('# #', '', $string);
+    }
+}
+
+/**
+ * 发送nsq消息
+ */
+if(!function_exists('SendNSQ')) {
+    function SendNSQ(string $topic, $data, float $deferTime = 0.0)
+    {
+        try {
+            retry(1, function() use ($topic, $data, $deferTime) {
+                R("发送NSQ消息${topic}");
+                $nsq = di()->get(Nsq::class);
+                $nsq->publish($topic, json_encode($data, JSON_UNESCAPED_UNICODE), $deferTime);
+                R("发送NSQ消息${topic}->publish");
+            });
+        } catch (Throwable $e) {
+            R($e->getMessage(), "NSQ发送失败");
+        }
     }
 }
