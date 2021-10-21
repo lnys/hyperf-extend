@@ -68,10 +68,10 @@ if(!function_exists('SendNSQ')) {
     {
         try {
             retry(1, function() use ($topic, $data, $deferTime) {
-                R("发送NSQ消息${topic}");
+                L("发送NSQ消息${topic}");
                 $nsq = di()->get(Nsq::class);
                 $nsq->publish($topic, json_encode($data, JSON_UNESCAPED_UNICODE), $deferTime);
-                R("发送NSQ消息${topic}->publish");
+                L("发送NSQ消息${topic}->success");
             });
         } catch (Throwable $e) {
             R($e->getMessage(), "NSQ发送失败");
