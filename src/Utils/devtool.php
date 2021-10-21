@@ -49,6 +49,22 @@ if (! function_exists('R')) {
     }
 }
 
+if (! function_exists('L')) {
+    function L($array, $name = '')
+    {
+        // LOG
+        $strName = $name !== "" ? sprintf("\n%s", $name) : "";
+        if ($strName === "") {
+            $strName = is_string($array) ? $array : json_encode($array, JSON_UNESCAPED_UNICODE);
+        }
+        $strData = $array !== "" ? sprintf("\n%s", json_encode($array,  JSON_UNESCAPED_UNICODE)) : "";
+        $fullStr = $strName . $strData;
+        if ($fullStr) {
+            ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("L")->info($fullStr);
+        }
+    }
+}
+
 if (! function_exists('D')) {
     function D($array, $name = '')
     {
