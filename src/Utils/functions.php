@@ -21,8 +21,8 @@ if (!function_exists('Container')) {
     }
 }
 
-if (!function_exists('Di')) {
-    function Di($id = null)
+if (!function_exists('DI')) {
+    function DI($id = null)
     {
         $container = ApplicationContext::getContainer();
         if ($id) {
@@ -69,7 +69,7 @@ if(!function_exists('SendNSQ')) {
         try {
             retry(1, function() use ($topic, $data, $deferTime) {
                 L("发送NSQ消息${topic}");
-                $nsq = di()->get(Nsq::class);
+                $nsq = DI()->get(Nsq::class);
                 $nsq->publish($topic, json_encode($data, JSON_UNESCAPED_UNICODE), $deferTime);
                 L("发送NSQ消息${topic}->success");
             });
