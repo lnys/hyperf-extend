@@ -49,7 +49,7 @@ if (!function_exists('RandId')) {
     function RandId(int $length = 10)
     {
         $rand = rand(5, 15);
-        return substr(str_replace("-", '', \Ramsey\Uuid\Uuid::uuid1(Di(\Ramsey\Uuid\Provider\Node\RandomNodeProvider::class)->getNode())), $rand, $length);
+        return substr(str_replace("-", '', \Ramsey\Uuid\Uuid::uuid1(DI()->get(\Ramsey\Uuid\Provider\Node\RandomNodeProvider::class)->getNode())), $rand, $length);
     }
 }
 
