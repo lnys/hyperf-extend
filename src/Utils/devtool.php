@@ -41,8 +41,7 @@ if (! function_exists('R')) {
         }
 
         // LOG
-        $fullStr = $array . $name;
-        if ($fullStr) {
+        if ($array) {
             ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("R")->debug($content);
         }
     }
@@ -63,8 +62,7 @@ if (! function_exists('L')) {
         }
 
         // LOG
-        $fullStr = $array . $name;
-        if ($fullStr) {
+        if ($array) {
             ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("L")->info($content);
         }
     }
