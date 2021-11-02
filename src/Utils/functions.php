@@ -60,27 +60,26 @@ if (!function_exists('FilterSpace')) {
     }
 }
 
+
 /**
  * 过滤数据
- * @author Ali2vu <751815097@qq.com>
- * @param $data
- * @return mixed
  */
 if (!function_exists('FilterData')) {
-
-    function FilterData($data, callable $function)
+    function FilterData($data, array $function)
     {
-        $data = is_object($data) ? (array) $data : $data;
-        if (!$data) return [];
-        $first = $data[0] ?? '';
-        $isFirst = $first ? false : true;
-        $data = $isFirst ? [$data] : $data;
-        foreach ($data as $k => &$v) {
-            $v = (array) $v;
-            $v = $function($v);
+        if ($data instanceof \Hyperf\Database\Model\Collection) {
+            $data->each(function($item) use($function) {
+                call_user_func($function, $item);
+            });
         }
 
-        return $isFirst ? reset($data) : $data;
+        if (is_array($data)) {
+            foreach ($data as &$item) {
+                call_user_func($function, $item);
+            }
+        }
+
+        return $data;
     }
 }
 
