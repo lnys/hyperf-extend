@@ -29,22 +29,21 @@ if (! function_exists('E')) {
 if (! function_exists('R')) {
     function R($array, $name = '')
     {
-        if ($array === "") {
-            return;
+        if ($array === "") return;
+        $stdin = true;
+        if ($stdin) {
+            $content = PHP_EOL.date('Y-m-d H:i:s').PHP_EOL;
+            if ($name) {
+                $content .= $name . ' -> ';
+            }
+            $content .= is_array($array) ? json_encode($array) . PHP_EOL : $array . PHP_EOL;
+            echo $content;
         }
-        echo PHP_EOL.date('Y-m-d H:i:s').PHP_EOL;
-        if ($name) {
-            echo $name . PHP_EOL;
-        }
-        print_r($array);
-        echo PHP_EOL;
 
         // LOG
-        $strName = $name !== "" ? sprintf("\n%s", $name) : "";
-        $strData = $array !== "" ? sprintf("\n%s", print_r($array, true)) : "";
-        $fullStr = $strName . $strData;
+        $fullStr = $array . $name;
         if ($fullStr) {
-            ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("R")->debug($fullStr);
+            ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("R")->debug($content);
         }
     }
 }
@@ -52,15 +51,21 @@ if (! function_exists('R')) {
 if (! function_exists('L')) {
     function L($array, $name = '')
     {
-        // LOG
-        $strName = $name !== "" ? sprintf("\n%s", $name) : "";
-        if ($strName === "") {
-            $strName = is_string($array) ? $array : json_encode($array, JSON_UNESCAPED_UNICODE);
+        if ($array === "") return;
+        $stdin = env('APP_ENV') === "develop";
+        if ($stdin) {
+            $content = PHP_EOL.date('Y-m-d H:i:s').PHP_EOL;
+            if ($name) {
+                $content .= $name . ' -> ';
+            }
+            $content .= is_array($array) ? json_encode($array) . PHP_EOL : $array . PHP_EOL;
+            echo $content;
         }
-        $strData = $array !== "" ? sprintf("\n%s", json_encode($array,  JSON_UNESCAPED_UNICODE)) : "";
-        $fullStr = $strName . $strData;
+
+        // LOG
+        $fullStr = $array . $name;
         if ($fullStr) {
-            ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("L")->info($fullStr);
+            ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("L")->info($content);
         }
     }
 }
@@ -79,19 +84,12 @@ if (! function_exists('V')) {
         if ($array === "") {
             return;
         }
-        echo PHP_EOL.date('Y-m-d H:i:s').PHP_EOL;
+        $content = PHP_EOL.date('Y-m-d H:i:s').PHP_EOL;
         if ($name) {
-            echo $name . PHP_EOL;
+            $content .= $name . PHP_EOL;
         }
+        echo $content;
         var_dump($array);
         echo PHP_EOL;
-
-        // LOG
-        $strName = $name !== "" ? sprintf("\n%s", $name) : "";
-        $strData = $array !== "" ? sprintf("\n%s", print_r($array, true)) : "";
-        $fullStr = $strName . $strData;
-        if ($fullStr) {
-            ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("V")->debug($fullStr);
-        }
     }
 }
