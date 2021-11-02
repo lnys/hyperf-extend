@@ -61,6 +61,30 @@ if (!function_exists('FilterSpace')) {
 }
 
 /**
+ * 过滤数据
+ * @author Ali2vu <751815097@qq.com>
+ * @param $data
+ * @return mixed
+ */
+if (!function_exists('FilterData')) {
+
+    function FilterData($data, callable $function)
+    {
+        $data = is_object($data) ? (array) $data : $data;
+        if (!$data) return [];
+        $first = $data[0] ?? '';
+        $isFirst = $first ? false : true;
+        $data = $isFirst ? [$data] : $data;
+        foreach ($data as $k => &$v) {
+            $v = (array) $v;
+            $v = $function($v);
+        }
+
+        return $isFirst ? reset($data) : $data;
+    }
+}
+
+/**
  * 发送nsq消息
  */
 if(!function_exists('SendNSQ')) {
