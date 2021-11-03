@@ -36,7 +36,7 @@ if (! function_exists('R')) {
             if ($name) {
                 $content .= $name . ' -> ';
             }
-            $content .= is_array($array) ? json_encode($array) . PHP_EOL : $array . PHP_EOL;
+            $content .= is_array($array) ? json_encode($array, JSON_UNESCAPED_UNICODE) . PHP_EOL : $array . PHP_EOL;
             echo $content;
         }
 
@@ -57,7 +57,7 @@ if (! function_exists('L')) {
             if ($name) {
                 $content .= $name . ' -> ';
             }
-            $content .= is_array($array) ? json_encode($array) . PHP_EOL : $array . PHP_EOL;
+            $content .= is_array($array) ? json_encode($array, JSON_UNESCAPED_UNICODE) . PHP_EOL : $array . PHP_EOL;
             echo $content;
         }
 
