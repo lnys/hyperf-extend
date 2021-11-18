@@ -90,7 +90,7 @@ if(!function_exists('SendNSQ')) {
     function SendNSQ(string $topic, $data, float $deferTime = 0.0)
     {
         try {
-            $topic .= ucfirst($topic);
+            $topic .= ucfirst(env('NSQ_ENV', "prod"));
             retry(1, function() use ($topic, $data, $deferTime) {
                 L("发送NSQ消息${topic}");
                 $nsq = DI()->get(Nsq::class);
