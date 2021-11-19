@@ -38,11 +38,10 @@ if (! function_exists('R')) {
             }
             $content .= is_array($array) ? json_encode($array, JSON_UNESCAPED_UNICODE) . PHP_EOL : $array . PHP_EOL;
             echo $content;
-        }
-
-        // LOG
-        if ($array) {
-            ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("R")->debug($content);
+            // LOG
+            if ($array) {
+                ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("R")->debug($content);
+            }
         }
     }
 }
@@ -59,11 +58,11 @@ if (! function_exists('L')) {
             }
             $content .= is_array($array) ? json_encode($array, JSON_UNESCAPED_UNICODE) . PHP_EOL : $array . PHP_EOL;
             echo $content;
-        }
 
-        // LOG
-        if ($array) {
-            ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("L")->info($content);
+            // LOG
+            if ($array) {
+                ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("L")->info($content);
+            }
         }
     }
 }
