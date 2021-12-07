@@ -40,7 +40,7 @@ if (! function_exists('R')) {
             echo $content;
             // LOG
             if ($array) {
-                ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("R")->debug($content);
+                ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("R")->info($content);
             }
         }
     }
@@ -51,18 +51,18 @@ if (! function_exists('L')) {
     {
         if ($array === "") return;
         $stdin = env('APP_ENV') === "develop";
+        $content = PHP_EOL.date('Y-m-d H:i:s').PHP_EOL;
+        if ($name) {
+            $content .= $name . ' -> ';
+        }
+        $content .= is_array($array) ? json_encode($array, JSON_UNESCAPED_UNICODE) . PHP_EOL : $array . PHP_EOL;
         if ($stdin) {
-            $content = PHP_EOL.date('Y-m-d H:i:s').PHP_EOL;
-            if ($name) {
-                $content .= $name . ' -> ';
-            }
-            $content .= is_array($array) ? json_encode($array, JSON_UNESCAPED_UNICODE) . PHP_EOL : $array . PHP_EOL;
             echo $content;
+        }
 
-            // LOG
-            if ($array) {
-                ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("L")->info($content);
-            }
+        // LOG
+        if ($array) {
+            ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get("L")->info($content);
         }
     }
 }
