@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 use Hyperf\Nsq\Nsq;
 use Hyperf\Utils\ApplicationContext;
+use Hyperf\Snowflake\IdGeneratorInterface;
 
 /**
  * 容器实例
@@ -30,6 +31,14 @@ if (!function_exists('DI')) {
         }
 
         return $container;
+    }
+}
+
+if (!function_exists('SF')) {
+    function SF()
+    {
+        $generate = ApplicationContext::getContainer()->get(IdGeneratorInterface::class);
+        return $generate->generate();
     }
 }
 
