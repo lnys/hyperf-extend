@@ -21,8 +21,8 @@ if (!function_exists('Container')) {
     }
 }
 
-if (!function_exists('Di')) {
-    function Di($id = null)
+if (!function_exists('DI')) {
+    function DI($id = null)
     {
         $container = ApplicationContext::getContainer();
         if ($id) {
@@ -49,7 +49,7 @@ if (!function_exists('RandId')) {
     function RandId(int $length = 10)
     {
         $rand = rand(5, 15);
-        return substr(str_replace("-", '', \Ramsey\Uuid\Uuid::uuid1(Di(\Ramsey\Uuid\Provider\Node\RandomNodeProvider::class)->getNode())), $rand, $length);
+        return substr(str_replace("-", '', \Ramsey\Uuid\Uuid::uuid1(DI()->get(\Ramsey\Uuid\Provider\Node\RandomNodeProvider::class)->getNode())), $rand, $length);
     }
 }
 
@@ -60,6 +60,29 @@ if (!function_exists('FilterSpace')) {
     }
 }
 
+
+/**
+ * 过滤数据
+ */
+if (!function_exists('FilterData')) {
+    function FilterData($data, array $function)
+    {
+        if ($data instanceof \Hyperf\Database\Model\Collection) {
+            $data->each(function($item) use($function) {
+                call_user_func($function, $item);
+            });
+        }
+
+        if (is_array($data)) {
+            foreach ($data as &$item) {
+                call_user_func($function, $item);
+            }
+        }
+
+        return $data;
+    }
+}
+
 /**
  * 发送nsq消息
  */
@@ -67,11 +90,12 @@ if(!function_exists('SendNSQ')) {
     function SendNSQ(string $topic, $data, float $deferTime = 0.0)
     {
         try {
+            $topic .= ucfirst(env('NSQ_ENV', "prod"));
             retry(1, function() use ($topic, $data, $deferTime) {
-                R("发送NSQ消息${topic}");
-                $nsq = di()->get(Nsq::class);
+                L("发送NSQ消息${topic}");
+                $nsq = DI()->get(Nsq::class);
                 $nsq->publish($topic, json_encode($data, JSON_UNESCAPED_UNICODE), $deferTime);
-                R("发送NSQ消息${topic}->publish");
+                L("发送NSQ消息${topic}->success");
             });
         } catch (Throwable $e) {
             R($e->getMessage(), "NSQ发送失败");
