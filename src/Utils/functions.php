@@ -101,7 +101,8 @@ if(!function_exists('SendNSQ')) {
         try {
             $topic .= ucfirst(env('NSQ_ENV', "prod"));
             retry(1, function() use ($topic, $data, $deferTime) {
-                L("发送NSQ消息${topic}");
+                $routeStr = isset($data['route']) ? "->{$data['route']}" : "";
+                L("发送NSQ消息${topic}{$routeStr}");
                 $nsq = DI()->get(Nsq::class);
                 $nsq->publish($topic, json_encode($data, JSON_UNESCAPED_UNICODE), $deferTime);
                 L("发送NSQ消息${topic}->success");
