@@ -27,5 +27,10 @@
             "src/Utils/devtool.php",
             "src/Utils/functions.php"
         ]
+    },
+    "extra": {
+        "hyperf": {
+            "config": "HyperfExtend\\ConfigProvider"
+        }
     }
 }

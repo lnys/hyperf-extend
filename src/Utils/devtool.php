@@ -32,7 +32,8 @@ if (! function_exists('R')) {
         if ($array === "") return;
         $stdin = true;
         if ($stdin) {
-            $content = PHP_EOL.date('Y-m-d H:i:s').PHP_EOL;
+            [$microsecond] = explode(" ", microtime());
+            $content = PHP_EOL. date('Y-m-d H:i:s:') . $microsecond . PHP_EOL;
             if ($name) {
                 $content .= $name . ' -> ';
             }
@@ -51,7 +52,8 @@ if (! function_exists('L')) {
     {
         if ($array === "") return;
         $stdin = env('APP_ENV') === "develop";
-        $content = PHP_EOL.date('Y-m-d H:i:s').PHP_EOL;
+        [$microsecond] = explode(" ", microtime());
+        $content = PHP_EOL. date('Y-m-d H:i:s:') . $microsecond . PHP_EOL;
         if ($name) {
             $content .= $name . ' -> ';
         }
@@ -81,7 +83,8 @@ if (! function_exists('V')) {
         if ($array === "") {
             return;
         }
-        $content = PHP_EOL.date('Y-m-d H:i:s').PHP_EOL;
+        [$microsecond] = explode(" ", microtime());
+        $content = PHP_EOL. date('Y-m-d H:i:s:') . $microsecond . PHP_EOL;
         if ($name) {
             $content .= $name . PHP_EOL;
         }
